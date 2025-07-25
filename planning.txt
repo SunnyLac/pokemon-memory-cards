@@ -1,0 +1,57 @@
+memory card game (pokemon edition)
+
+layout/design
+- 12 cards 2 rows, 6 columns
+	- card has picture and name
+	- identical sizing
+- background -> black? 
+- font colour -> white
+- card colour -> red?
+- title top left 
+- scores (both current and best) top right
+	- state for both
+	- currentScore
+	- bestScore
+- small desc underneath title
+
+
+backend
+- getting the information
+	- use PokeAPI to gather 12 pokemon
+	- option 1 (use limit and offset)
+		- https://pokeapi.co/api/v2/pokemon?limit=12&offset=x where x is a randomly generated number
+		- issue would be that evolutions are in order, making it easier for users to remember
+	- option 2 (generate 12 random numbers)
+		- https://pokeapi.co/api/v2/pokemon/x/ where x is a randomly generated number
+		- requires 12 fetch calls
+
+- decided that option 2 would be best for fun
+
+
+- storing cards
+	- option 1
+		- storing the pokemon ids, issue would be that this means every re-render requires 12 fetch calls
+	- option 2
+		- store the information from the original fetch calls, takes more storage space, but less fetch calls
+	- going with option 2
+
+
+- logic
+	- keep track of the 12 cards, once a user clicks on a card, score++ and that card should be remembered as already being clicked
+		- option 1: give each card an id (0-12), store the ids in an state array
+		- option 2: add additional key value (something like clicked : true / clicked : false) and add it to the stored information
+		- going with option 2
+	- if user clicks on a card that already been clicked, update best score if current score is higher and reset score back to 1. reset all remembered cards except for the card just clicked
+	- after each click, cards should be moved/shuffled, this can be done by shuffling the array in which the information (option 2) is stored.
+	- if all 12 cards have been clicked send alert
+
+- code layout
+	- cards should be a component
+	- store information with JSON and store JSON in array
+	- JSON for cards
+		- name of pokemon (string)
+		- imgURL (string)
+		- clicked (boolean)
+
+
+
